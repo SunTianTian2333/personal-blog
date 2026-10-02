@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const siteTitle = "个人博客";
+---
+
+<BaseLayout title="关于" description="关于本站与联系方式">
+  <h1>关于</h1>
+  <p class="page-lead">求职向 Agent 应用工程师 · 学习笔记与可公开的项目复盘。</p>
+  <p>
+    本站由 <strong>Astro</strong> 生成，文章存放在仓库内的 Markdown 文件中。部署到 GitHub Pages 后，HR
+    只需打开 HTTPS 链接即可阅读，无需 GitHub 账号。
+  </p>
+  <p>
+    简历与 PDF：可在部署后将 PDF 放到 <code>public/resume.pdf</code>，并在此处加上下载链接。
+  </p>
+</BaseLayout>

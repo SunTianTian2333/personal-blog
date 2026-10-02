@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li>
+        <p class="post-meta">{formatDate(post.data.pubDate)}</p>
+        <h2>
+          <a href={`${base}blog/${post.id}/`}>{post.data.title}</a>
+        </h2>
+        <p class="post-excerpt">{post.data.description}</p>
+      </li>
+    ))
+  }
+</ul>

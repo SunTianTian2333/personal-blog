@@ -1,0 +1,17 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostList from "../components/PostList.astro";
+
+const siteTitle = "个人博客";
+
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={siteTitle} description="技术笔记与项目复盘">
+  <h1>{siteTitle}</h1>
+  <p class="page-lead">Markdown 写作，静态发布，可部署到 GitHub Pages 供 HR 访问。</p>
+  <PostList posts={posts} />
+</BaseLayout>

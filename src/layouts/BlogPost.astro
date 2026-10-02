@@ -1,0 +1,31 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+}
+
+const { title, description, pubDate, updatedDate } = Astro.props;
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="prose">
+    <h1>{title}</h1>
+    <p class="post-meta">
+      发布于 {formatDate(pubDate)}
+      {updatedDate && <> · 更新于 {formatDate(updatedDate)}</>}
+    </p>
+    <slot />
+  </article>
+</BaseLayout>
