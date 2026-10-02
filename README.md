@@ -2,6 +2,13 @@
 
 Astro + Markdown 静态博客（Phase 0 框架）。适合部署到 **GitHub Pages**，给 HR 一个 HTTPS 链接即可访问。
 
+## 线上地址
+
+- 仓库：<https://github.com/SunTianTian2333/personal-blog>
+- 站点（HR 可访问）：<https://suntiantian2333.github.io/personal-blog/>
+
+首次发布约需 1–3 分钟构建；若 404，稍等后刷新。
+
 ## 本地预览
 
 ```powershell
@@ -43,18 +50,32 @@ npm run build
 npm run preview
 ```
 
-## 部署到 GitHub（给 HR 访问）
+## 更新线上内容（当前：gh-pages 分支）
 
-### 方式 A：单独仓库（推荐）
+改完文章或页面后：
 
-1. 在 GitHub 新建仓库，例如 `personal-blog`，只推送本目录内容（或整仓子目录用 Actions，见方式 B）。
-2. 仓库 **Settings → Pages → Build and deployment → Source** 选 **GitHub Actions**。
-3. 使用本目录内 `.github/workflows/deploy-pages.yml`（路径为仓库根时的 standalone 版见该文件注释）。
-4. 推送 `main` 后访问：`https://<你的用户名>.github.io/personal-blog/`
+```powershell
+cd projects/personal-blog
+$env:ASTRO_SITE="https://SunTianTian2333.github.io"
+$env:ASTRO_BASE="/personal-blog/"
+npm run build
+npx --yes gh-pages -d dist -b gh-pages
+```
 
-### 方式 B：放在 agent-career  monorepo
+（`gh-pages` 会把 `dist/` 推到远程 `gh-pages` 分支，无需 Actions。）
 
-仓库根目录已有（或添加）`.github/workflows/deploy-personal-blog-pages.yml`，仅当 `projects/personal-blog/**` 变更时构建并发布 Pages。
+### 可选：GitHub Actions 自动部署
+
+本地已有 `.github/workflows/deploy-pages.yml`。推送 workflow 需要 GitHub CLI 带 `workflow` 权限：
+
+```powershell
+gh auth refresh -h github.com -s workflow,repo
+git add .github
+git commit -m "Add GitHub Actions Pages deploy"
+git push
+```
+
+然后在仓库 **Settings → Pages → Build and deployment → Source** 选 **GitHub Actions**。
 
 ### 环境变量
 
